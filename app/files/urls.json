@@ -1,0 +1,13 @@
+URLS:
+
+GET : localhost:8080/reports/companies/all - all data on companies
+GET : localhost:8080/reports/sbi_id/320 - data on a single user
+GET : localhost:8080/reports/card_number/4 - data on card number
+GET : localhost:8080/reports/company/Eskom - data on company
+GET : localhost:8080/reports/card_type/Eskom - data on card type, which is the same as the company
+GET : localhost:8080/reports/terminal_number/MED002 - data on terminal
+GET : localhost:8080/reports/access_granted/all - all the acces which were successful
+GET : localhost:8080/reports/full_name/Sean Terrell - same as sbi_id and card_number but not using the name
+GET : localhost:8080/reports/location/Witbank - data on location
+GET : localhost:8080/reports/nationality/RSA - yes
+POST : localhost:8080/reports/users - json => {"date":"2013-04-30"}

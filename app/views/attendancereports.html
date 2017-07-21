@@ -1,0 +1,96 @@
+<style>
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+  .col-md-6 {
+    display: inline-block;
+  }
+  .input-group-btn {
+    position: relative;
+    font-size: 0;
+    white-space: nowrap;
+  }
+
+</style>
+
+  <div class="main">
+    <div class="">
+  <div class="results">
+    <div class="group">
+      <div class="row">
+        <div class="col-lg-4">
+          <label class="label" for="search">Search For Employee
+            <input class="input" id="search" type="text" ng-model="username" placeholder="search for Person" />
+          </label>
+        </div>
+        <div class="col-lg-4">
+          <label class="label" >
+            Enter start  date:
+            <input class="input" type="date" ng-model="start" min="2017-01-01">
+          </label>
+        </div>
+        <div class="col-lg-4">
+          <label class="label" >
+            Enter end date:
+            <input class="input" type="date" ng-model="end" min="start +1" max="new Date()">
+          </label>
+        </div>
+      </div>
+    <button class="btn btn-small btn-success" type="button" ng-click="viewUserReports()">Search</button>
+    <!--</div>-->
+    <!--<div class="group" ng-show="username != '' || userCompany != null">-->
+      <h1>{{username}}</h1><br>
+      <p class="title">&nbsp&nbsp Card Number: &nbsp&nbsp</p><h3>&nbsp&nbsp{{cardNumber}}&nbsp&nbsp</h3>
+      <!--<p class="title">&nbsp&nbsp Company: &nbsp&nbsp</p><h3>&nbsp{{userCompany}}</h3>-->
+      <!--<p class="title">&nbsp &nbsp Phone: &nbsp&nbsp</p><h3>&nbsp{{phoneNumber}}</h3>-->
+      <!--<p class="title">&nbsp&nbsp Vehicle Registration: &nbsp&nbsp</p><h3>&nbsp{{vehicleRegistration}}</h3>-->
+
+    </div>
+    <div class="spinner-container" ng-if="loading"><div class="loader"></div></div>
+    <div ng-if="loading == false" class="widget-nopad">
+      <div class="widget-header"> <i class="icon-list-alt"></i>
+        <button ng-click="ExportToPDF(username)" class="btn">Print</button>
+      </div>
+      <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <td>Date</td>
+          <td>Access</td></tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="(key, value) in userAttendance | groupBy: 'time.slice(0, 11)'">
+          <td>
+            {{formatDate(key)}}
+          </td>
+          <td>
+          <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+              <th> Time</th>
+              <th> Location</th>
+              <!--<th> Entered/Exited</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in value">
+              <td> {{user.time}}</td>
+              <td> {{user.terminal}} </td>
+              <!--<td> {{user.strDirection}} </td>-->
+            </tr>
+            </tbody>
+          </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+  </div>
+    </div>
+</div>
