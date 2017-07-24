@@ -15,6 +15,8 @@ var cron = require('node-cron');
 var csv = require("fast-csv");
 var fs = require("file-system");
 var sql = require('mssql');
+var csv = require("fast-csv");
+var fs = require("file-system");
 var app = express();
 app.get('*',index);
 // view engine setup
@@ -48,25 +50,23 @@ con.connect(function(err) {
 
 cron.schedule('* * * * *', function(){
   console.log('Looking for new access');
-
   //Check for new Access Logs
   if (fs.existsSync('Xcore_Data/access.txt')) {
-    csv.fromPath("Xcore_Data/access.txt", {headers: true})
-      .on("data", function (data) {
-
+    csv.fromPath("Xcore_Data/access.txt",{headers:true})
+      .on("data", function(data){
         console.log(data);
-          con.query("INSERT INTO `kxcreporting`.`access` ( `time`, `terminal`, `name`, `card_number`) " +
-            "VALUES ( '" + data.Time + "', '" + data.DeviceName + "', '" + data.FirstName + " " + data.LastName + "', '" + data.CardNumber + "');"
-            , function (err, result) {
-              if (err) console.log(err);
-              console.log("Result: " + JSON.stringify(result));
-            });
+        con.query("INSERT INTO `kxcreporting`.`access` ( `time`, `terminal`, `name`, `card_number`) " +
+          "VALUES ( '"+ data.Time +"', '"+ data.DeviceName +"', '"+ data.FirstName + " " + data.LastName +"', '"+ data.CardNumber +"');"
+          , function (err, result) {
+            if (err) console.log(err);
+            console.log("Result: " + JSON.stringify(result));
+          });
       })
-      .on("end", function () {
+      .on("end", function(){
         console.log("done");
-        fs.rename('Xcore_Data/access.txt', 'Xcore_Data/access-' + new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear() + '_' + new Date().getHours() + ':' + new Date().getMinutes() + '.txt', function (err) {
+        fs.rename('Xcore_Data/access.txt', 'Xcore_Data/access-'+new Date().getDate()+'-'+new Date().getMonth()+'-'+new Date().getFullYear()+'_'+new Date().getHours()+'_'+new Date().getMinutes()+'.txt', function (err) {
           if (err) throw err;
-          console.log('rename complete');
+          console.log('renamed complete');
         });
       });
   }
@@ -88,7 +88,7 @@ cron.schedule('* * 23 * *', function(){
       })
       .on("end", function() {
         console.log("done");
-        fs.rename('Xcore_Data/terminals.txt', 'Xcore_Data/terminals-' + new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear() + '_' + new Date().getHours() + ':' + new Date().getMinutes() + '.txt', function (err) {
+        fs.rename('Xcore_Data/terminals.txt', 'Xcore_Data/terminals-' + new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear() + '_' + new Date().getHours() + '_' + new Date().getMinutes() + '.txt', function (err) {
           if (err) throw err;
           console.log('renamed complete');
         });
@@ -112,7 +112,7 @@ cron.schedule('* * 23 * *', function(){
       })
       .on("end", function(){
         console.log("done");
-        fs.rename('Xcore_Data/all_users.txt', 'Xcore_Data/all_users-'+new Date().getDate()+'-'+new Date().getMonth()+'-'+new Date().getFullYear()+'_'+new Date().getHours()+':'+new Date().getMinutes()+'.txt', function (err) {
+        fs.rename('Xcore_Data/all_users.txt', 'Xcore_Data/all_users-'+new Date().getDate()+'-'+new Date().getMonth()+'-'+new Date().getFullYear()+'_'+new Date().getHours()+'_'+new Date().getMinutes()+'.txt', function (err) {
           if (err) throw err;
           console.log('renamed complete');
           res.json(listdata)
