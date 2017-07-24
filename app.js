@@ -40,7 +40,7 @@ app.use('/access',access);
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "infoware"
+  password: "kusilex"
 });
 
 con.connect(function(err) {

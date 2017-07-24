@@ -6,7 +6,7 @@ var fs = require("file-system");
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "infoware",
+  password: "kusilex",
   database: "kxcreporting"
 });
 

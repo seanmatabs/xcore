@@ -6,7 +6,7 @@ var csv = require("fast-csv");
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "infoware",
+  password: "kusilex",
   database: "kxcreporting"
 });
 
